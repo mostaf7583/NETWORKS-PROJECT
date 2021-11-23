@@ -17,4 +17,4 @@ app.get('/',function(req,res)
   res.render('index',{title: "express"})});
 
 module.exports = app;
-app,listen(3000);
+app.listen(3000);

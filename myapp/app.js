@@ -1,11 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-const { title } = require('process');
-
-
-
-
 var app = express();
 
 // view engine setup
@@ -20,5 +15,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',function(req,res)
 {
   res.render('index',{title: "express"})});
+
 module.exports = app;
 app,listen(3000);

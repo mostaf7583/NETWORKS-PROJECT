@@ -20,5 +20,5 @@ instruction :
 - You will have to get the videos links yourself and embed them from youtube or any other website. Don't download the videos so that the size of your project would remain small. Submissions may have a size limit. "processing"
 
 to do :
- 1.login page and link it with a link to registeration page 
- 2.store the username and passsword in mongo  
+ 1.login page and link it with a link to registeration page "done auto" 
+ 2.store the username and passsword in mongo ================important====================

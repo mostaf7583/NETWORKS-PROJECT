@@ -23,6 +23,51 @@ app.get('/', function (req, res) {
 app.get('/home',function(req,res){
   res.render('home');
 })
+//importing Cart
+app.get('/cart',function(req,res){
+  res.render('cart');
+});
+// importing sports
+app.get('/sports',function(req,res){
+  res.render('sports');
+})
+//importing phones
+app.get('/books',function(req,res){
+  res.render('books')
+})
+//importing phones
+app.get('/phones',function(req,res){
+  res.render('phones')
+})
+//importing sun
+app.get('/sun',function(req,res){
+  res.render('sun')
+})
+//importing galaxy
+app.get('/galaxy',function(req,res){
+  res.render('galaxy')
+})
+//importing leaves
+app.get('/leaves',function(req,res){
+  res.render('leaves')
+})
+//importing searchresults
+app.get('/searchresults',function(req,res){
+  res.render('searchresults')
+})
+//importing tennis
+app.get('/tennis',function(req,res){
+  res.render('tennis')
+})
+//importing iphone
+
+app.get('/iphone',function(req,res){
+  res.render('iphone')
+})
+//importing boxing
+app.get('/boxing',function(req,res){
+  res.render('boxing')
+})
 // requiring register page usernames and password
 app.post('/registration',function(req,res){
  var x = req.body.username;
@@ -30,13 +75,15 @@ app.post('/registration',function(req,res){
  console.log(req.body.username);
  console.log(req.body.password);
 });
+
 async function main(){
   var { MongoClient } =require('mongodb');
   var uri ="mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority";
-  var client =new MongoClient(uri,{useNewUrlParser : true ,useUnifedTopology :true});
+  var client =new MongoClient(uri,{useNewUrlParser : true });
   await client.connect();
-  await client.db('firstdb').createCollection("secondcollection");
-  client.close;
+ // await client.db('firstdb').createCollection("second collection");
+
+ client.close;
 }
 main().catch(console.error)
 module.exports = app;

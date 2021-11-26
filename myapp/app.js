@@ -1,3 +1,4 @@
+const { error } = require('console');
 var express = require('express');
 var path = require('path');
 var app = express();
@@ -10,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+//importing the reg page 
 app.get('/registration', function (req, res) {
   res.render('registration');
 });
@@ -68,23 +69,53 @@ app.get('/iphone',function(req,res){
 app.get('/boxing',function(req,res){
   res.render('boxing')
 })
+/////////////////////////////////////////////////////////////////////////##############################//////////////////////////////////////////
+// using the mongodb for aquering username and searching 
+
 // requiring register page usernames and password
+//as i tring to code this function i countered a problem in the ejs file which in the form there is an action i donot know how to handle it 
+
 app.post('/registration',function(req,res){
- var x = req.body.username;
- var y = req.body.password;
- console.log(req.body.username);
- console.log(req.body.password);
+ var userdata = {username : req.body.username ,password : req.body.password};
+ main(userdata)
 });
 
-async function main(){
-  var { MongoClient } =require('mongodb');
-  var uri ="mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority";
+app.post('/login',function(req,res){
+  var userdata = {username : req.body.username ,password : req.body.password};
+ main1(userdata);
+  
+})
+async function main1(userdata){
+  var { MongoClient, GridFSBucketWriteStream } =require('mongodb');
+  var uri ="mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority";//our mognodb connection
   var client =new MongoClient(uri,{useNewUrlParser : true });
   await client.connect();
- // await client.db('firstdb').createCollection("second collection");
-
- client.close;
+  var output = await client.db('firstdb').collection("second collection").find().toArray();
+  for (let index = 0; index < output.length ; index++) {
+    if (userdata.username == output[index].username && userdata.password==outout[index].username){
+      console.log(true);
+    }
+  }
+    client.close;
 }
+async function main(userdata){
+  var { MongoClient, GridFSBucketWriteStream } =require('mongodb');
+  var uri ="mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority";//our mognodb connection
+  var client =new MongoClient(uri,{useNewUrlParser : true });
+  await client.connect();
+  var output = await client.db('firstdb').collection("second collection").find().toArray();
+  for (let index = 0; index < output.length ; index++) {
+     if (userdata.username == output[index].username){
+       console.log(error);
+     }
+   }
+  // await client.db('firstdb').Collection("second collection");
+  //await client.db('firstdb').collection("second collection").insertOne(user);
+  await client.db('firstdb').collection("second collection").insertOne(userdata);
+  var output = await client.db('firstdb').collection("second collection").find().toArray();
+    client.close;
+}
+
 main().catch(console.error)
 module.exports = app;
 app.listen(3000);

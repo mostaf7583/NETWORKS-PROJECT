@@ -11,16 +11,33 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.get('/reg', function (req, res) {
-  res.render('registration', { ppp : "registration" })
+app.get('/registration', function (req, res) {
+  res.render('registration');
+});
+// importing root page 
+app.get('/', function (req, res) {
+  res.render('login')
 });
 
-app.post('/reg',function(req,res){
+// importing home page
+app.get('/home',function(req,res){
+  res.render('home');
+})
+// requiring register page usernames and password
+app.post('/registration',function(req,res){
  var x = req.body.username;
  var y = req.body.password;
- console.log(x);
- console.log(y);
+ console.log(req.body.username);
+ console.log(req.body.password);
 });
-
+async function main(){
+  var { MongoClient } =require('mongodb');
+  var uri ="mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority";
+  var client =new MongoClient(uri,{useNewUrlParser : true ,useUnifedTopology :true});
+  await client.connect();
+  await client.db('firstdb').createCollection("secondcollection");
+  client.close;
+}
+main().catch(console.error)
 module.exports = app;
 app.listen(3000);

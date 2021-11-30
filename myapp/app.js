@@ -88,13 +88,13 @@ app.post('/register', function(req, res) {
 app.post('/login', async function(req, res) {
     var userdata = { username: req.body.username, password: req.body.password };
     console.log(userdata);
-    var { MongoClient, GridFSBucketWriteStream } = require('mongodb');
+    var { MongoClient } = require('mongodb');
     var uri = "mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority"; //our mognodb connection
     var client = new MongoClient(uri, { useNewUrlParser: true });
     await client.connect();
     var output = await client.db('firstdb').collection("second collection").find().toArray();
-    for (let index = 0; index < output.length; index++) {
-        if (userdata.username === output[index].username && userdata.password === output[index].username) {
+    for (let value of arr) {
+        if (userdata.username === output[value].username && userdata.password === output[index].username) {
             console.log(userdata);
             res.redirect('/home');
         }
@@ -104,14 +104,14 @@ app.post('/login', async function(req, res) {
 })
 
 async function main(userdata) {
-    var { MongoClient, GridFSBucketWriteStream } = require('mongodb');
+    var { MongoClient } = require('mongodb');
     var uri = "mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority"; //our mognodb connection
     var client = new MongoClient(uri, { useNewUrlParser: true });
     await client.connect();
     var output = await client.db('firstdb').collection("second collection").find().toArray();
     var flag = true;
-    for (let index = 0; index < output.length; index++) {
-        if (userdata.username === output[index].username) {
+    for (let value of arr) {
+        if (userdata.username === output[value].username) {
             console.log("I am here");
             flag = false;
         }

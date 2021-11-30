@@ -111,8 +111,8 @@ app.post('/login', async function(req, res) {
     var client = new MongoClient(uri, { useNewUrlParser: true });
     await client.connect();
     var output = await client.db('firstdb').collection("second collection").find().toArray();
-    for (let value of arr) {
-        if (userdata.username === output[value].username && userdata.password === output[index].username) {
+    for (let value of output) {
+        if (userdata.username === value.username && userdata.password === value.username) {
             console.log(userdata);
             res.redirect('/home');
         }
@@ -128,8 +128,8 @@ async function main(userdata) {
     await client.connect();
     var output = await client.db('firstdb').collection("second collection").find().toArray();
     var flag = true;
-    for (let value of arr) {
-        if (userdata.username === output[value].username) {
+    for (let value of output) {
+        if (userdata.username === value.username) {
             console.log("I am here");
             flag = false;
         }
@@ -142,6 +142,6 @@ async function main(userdata) {
     //await client.db('firstdb').collection("second collection").insertOne(user);
     client.close;
 }
-
+main().catch(console.error);
 module.exports = app;
 app.listen(3000);

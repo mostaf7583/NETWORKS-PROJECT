@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var app = express();
 var currentuser = null;
-const cart=[];
+const cart = [];
 // view engine setup
 
 app.set('views', path.join(__dirname, 'views'));
@@ -14,85 +14,85 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //importing the reg page 
-app.get('/registration', function (req, res) {
-  res.render('registration');
+app.get('/registration', function(req, res) {
+    res.render('registration');
 });
 // importing root page 
-app.get('/', function (req, res) {
-  res.render('login')
+app.get('/', function(req, res) {
+    res.render('login')
 });
 
 // importing home page
-app.get('/home', function (req, res) {
-  res.render('home');
-})
-//importing Cart
-app.get('/cart', function (req, res) {
-  res.render('cart');
+app.get('/home', function(req, res) {
+        res.render('home');
+    })
+    //importing Cart
+app.get('/cart', function(req, res) {
+    res.render('cart');
 });
 // importing sports
-app.get('/sports', function (req, res) {
-  res.render('sports');
-})
-//importing phones
-app.get('/books', function (req, res) {
-  res.render('books')
-})
-//importing phones
-app.get('/phones', function (req, res) {
-  res.render('phones')
-})
-//importing sun
-app.get('/sun', function (req, res) {
-  res.render('sun')
-})
-//importing galaxy
-app.get('/galaxy', function (req, res) {
-  res.render('galaxy')
-})
-//importing leaves
-app.get('/leaves', function (req, res) {
-  res.render('leaves')
-})
-//importing searchresults
-app.get('/searchresults', function (req, res) {
-  res.render('searchresults')
-})
-//importing tennis
-app.get('/tennis', function (req, res) {
-  res.render('tennis')
-})
-//importing iphone
+app.get('/sports', function(req, res) {
+        res.render('sports');
+    })
+    //importing phones
+app.get('/books', function(req, res) {
+        res.render('books')
+    })
+    //importing phones
+app.get('/phones', function(req, res) {
+        res.render('phones')
+    })
+    //importing sun
+app.get('/sun', function(req, res) {
+        res.render('sun')
+    })
+    //importing galaxy
+app.get('/galaxy', function(req, res) {
+        res.render('galaxy')
+    })
+    //importing leaves
+app.get('/leaves', function(req, res) {
+        res.render('leaves')
+    })
+    //importing searchresults
+app.get('/searchresults', function(req, res) {
+        res.render('searchresults')
+    })
+    //importing tennis
+app.get('/tennis', function(req, res) {
+        res.render('tennis')
+    })
+    //importing iphone
 
-app.get('/iphone', function (req, res) {
-  res.render('iphone')
-})
-//importing boxing
-app.get('/boxing', function (req, res) {
-  res.render('boxing')
-})
-/////////////////////////////////////////////////////////////////////////##############################//////////////////////////////////////////
-// using the mongodb for aquering username and searching 
+app.get('/iphone', function(req, res) {
+        res.render('iphone')
+    })
+    //importing boxing
+app.get('/boxing', function(req, res) {
+        res.render('boxing')
+    })
+    /////////////////////////////////////////////////////////////////////////##############################//////////////////////////////////////////
+    // using the mongodb for aquering username and searching 
 
 // requiring register page usernames and password
 //as i tring to code this function i countered a problem in the ejs file which in the form there is an action i donot know how to handle it 
-app.post('/addtocartiphone',function (req,res) {
-  cart.push('iphone');
+app.post('/addtocartiphone', function(req, res) {
+    cart.push('iphone');
 })
-app.post('/addtocartsamsung',function (req,res) {
-  cart.push('samsung');
+app.post('/addtocartsamsung', function(req, res) {
+    cart.push('samsung');
 })
-app.post('/addtocartsun',function (req,res) {
-  cart.push('sun');
+app.post('/addtocartsun', function(req, res) {
+    cart.push('sun');
 })
-app.post('/addtocarttennis',function (req,res) {
-  cart.push('tennis');
+app.post('/addtocarttennis', function(req, res) {
+    cart.push('tennis');
 })
-app.post('/addtocartleaves',function (req,res) {
-  cart.push('leaves');
+app.post('/addtocartleaves', function(req, res) {
+    cart.push('leaves');
 })
-app.post('/addtocartboxing',function (req,res) {
-  cart.push('boxing');
+app.post('/addtocartboxing', function(req, res) {
+    cart.push('boxing');
 })
 
 

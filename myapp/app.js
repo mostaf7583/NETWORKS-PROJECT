@@ -78,21 +78,32 @@ app.get('/boxing', function(req, res) {
 //as i tring to code this function i countered a problem in the ejs file which in the form there is an action i donot know how to handle it 
 app.post('/addtocartiphone', function(req, res) {
     cart.push('iphone');
+    console.log(cart)
 })
 app.post('/addtocartsamsung', function(req, res) {
     cart.push('samsung');
+    console.log(cart)
+
 })
 app.post('/addtocartsun', function(req, res) {
     cart.push('sun');
+    console.log(cart)
+
 })
 app.post('/addtocarttennis', function(req, res) {
     cart.push('tennis');
+    console.log(cart)
+
 })
 app.post('/addtocartleaves', function(req, res) {
     cart.push('leaves');
+    console.log(cart)
+
 })
 app.post('/addtocartboxing', function(req, res) {
     cart.push('boxing');
+    console.log(cart)
+
 })
 
 
@@ -114,7 +125,7 @@ app.post('/login', async function(req, res) {
     for (let value of output) {
         if (userdata.username === value.username && userdata.password === value.username) {
             console.log(userdata);
-            res.redirect('/home');
+            res.redirect('home');
         }
     }
     client.close;
@@ -141,7 +152,7 @@ async function main(userdata) {
     // await client.db('firstdb').Collection("second collection");
     //await client.db('firstdb').collection("second collection").insertOne(user);
     client.close;
+
 }
-main().catch(console.error);
 module.exports = app;
 app.listen(3000);

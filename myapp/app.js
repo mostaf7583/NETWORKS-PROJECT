@@ -96,60 +96,51 @@ app.post('/addtocartboxing',function (req,res) {
 })
 
 
-app.post('/register', function (req, res) {
-  var userdata = { username: req.body.username, password: req.body.password };
-  console.log(userdata);
-  main(userdata);
-  
+//mostafa
+app.post('/register', function(req, res) {
+    var userdata = { username: req.body.username, password: req.body.password };
+    console.log(userdata);
+    main(userdata)
 });
 
-app.post('/login', async function (req, res) {
-
-  var userdata = { username: req.body.username, password: req.body.password };
-  console.log(userdata);
-      var { MongoClient, GridFSBucketWriteStream } = require('mongodb');
-  var uri = "mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority";//our mognodb connection
-  var client = new MongoClient(uri, { useNewUrlParser: true });
-  await client.connect();
-  var output = await client.db('firstdb').collection("second collection").find().toArray();
-  for (let index = 0; index < output.length; index++) {
-    if (userdata.username === output[index].username && userdata.password === output[index].username) {
-      console.log(userdata);
-      res.redirect('/home');
-      currentuser=userdata
-
+app.post('/login', async function(req, res) {
+    var userdata = { username: req.body.username, password: req.body.password };
+    console.log(userdata);
+    var { MongoClient } = require('mongodb');
+    var uri = "mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority"; //our mognodb connection
+    var client = new MongoClient(uri, { useNewUrlParser: true });
+    await client.connect();
+    var output = await client.db('firstdb').collection("second collection").find().toArray();
+    for (let value of arr) {
+        if (userdata.username === output[value].username && userdata.password === output[index].username) {
+            console.log(userdata);
+            res.redirect('/home');
+        }
     }
-  }
-  client.close;
+    client.close;
 
 })
 
 async function main(userdata) {
-  var { MongoClient, GridFSBucketWriteStream } = require('mongodb');
-  var uri = "mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority";//our mognodb connection
-  var client = new MongoClient(uri, { useNewUrlParser: true });
-  await client.connect();
-  var output = await client.db('firstdb').collection("second collection").find().toArray();
-  var flag = true;
-  
-  for (let index = 0; index < output.length; index++) {
-    if(userdata.username === '' && userdata.password===''){
-      flag =false;
+    var { MongoClient } = require('mongodb');
+    var uri = "mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority"; //our mognodb connection
+    var client = new MongoClient(uri, { useNewUrlParser: true });
+    await client.connect();
+    var output = await client.db('firstdb').collection("second collection").find().toArray();
+    var flag = true;
+    for (let value of arr) {
+        if (userdata.username === output[value].username) {
+            console.log("I am here");
+            flag = false;
+        }
     }
-    if (userdata.username === output[index].username) {
-      console.log("I am here");
-      flag = false;
+    if (flag) {
+        await client.db('firstdb').collection("second collection").insertOne(userdata);
     }
-  }
-  if (flag) {
-    await client.db('firstdb').collection("second collection").insertOne(userdata);
-    res.redirect('/home');
 
-  }
-
-  // await client.db('firstdb').Collection("second collection");
-  //await client.db('firstdb').collection("second collection").insertOne(user);
-  client.close;
+    // await client.db('firstdb').Collection("second collection");
+    //await client.db('firstdb').collection("second collection").insertOne(user);
+    client.close;
 }
 
 module.exports = app;

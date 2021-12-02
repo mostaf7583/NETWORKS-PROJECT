@@ -4,6 +4,73 @@ var path = require('path');
 var app = express();
 var currentuser = null;
 const cart = [];
+
+function getnumberofsamsung(data) {
+    data.sort();
+    var counter = 0;
+    for (let i = 0; i <= data.length; i++) {
+        if (data[i] == 'samsung') {
+            counter++;
+        }
+    }
+    return counter;
+}
+
+function getnumberofiph(data) {
+    data.sort();
+    var counter = 0;
+    for (let i = 0; i <= data.length; i++) {
+        if (data[i] == 'iphone') {
+            counter++;
+        }
+    }
+    return counter;
+}
+
+
+function getnumberofsun(data) {
+    data.sort();
+    var counter = 0;
+    for (let i = 0; i <= data.length; i++) {
+        if (data[i] == 'sun') {
+            counter++;
+        }
+    }
+    return counter;
+}
+
+function getnumberoftennis(data) {
+    data.sort();
+    var counter = 0;
+    for (let i = 0; i <= data.length; i++) {
+        if (data[i] == 'tennis') {
+            counter++;
+        }
+    }
+    return counter;
+}
+
+function getnumberofboxing(data) {
+    data.sort();
+    var counter = 0;
+    for (let i = 0; i <= data.length; i++) {
+        if (data[i] == 'boxing') {
+            counter++;
+        }
+    }
+    return counter;
+}
+
+function getnumberofleaves(data) {
+    data.sort();
+    var counter = 0;
+    for (let i = 0; i <= data.length; i++) {
+        if (data[i] == 'leaves') {
+            counter++;
+        }
+    }
+    return counter;
+}
 // view engine setup
 
 app.set('views', path.join(__dirname, 'views'));
@@ -24,13 +91,22 @@ app.get('/', function(req, res) {
 
 // importing home page
 app.get('/home', function(req, res) {
-        res.render('home');
+    res.render('home');
+})
+app.get('/lol', function(req, res) {
+        res.render('lol');
     })
     //importing Cart
 app.get('/cart', function(req, res) {
-    res.render('cart');
-});
-// importing sports
+        res.render('cart', {
+            quantitysam: getnumberofsamsung(cart),
+            quantityiph: getnumberofiph(cart),
+            quantitytennis: getnumberoftennis(cart),
+            quantitysun: getnumberofsun(cart),
+            quantityleaves: getnumberofleaves(cart),
+            quantityboxing: getnumberofboxing(cart)
+        })
+    }) // importing sports
 app.get('/sports', function(req, res) {
         res.render('sports');
     })
@@ -48,9 +124,10 @@ app.get('/sun', function(req, res) {
     })
     //importing galaxy
 app.get('/galaxy', function(req, res) {
-        res.render('galaxy')
-    })
-    //importing leaves
+    res.render('galaxy')
+})
+
+//importing leaves
 app.get('/leaves', function(req, res) {
         res.render('leaves')
     })
@@ -105,14 +182,21 @@ app.post('/addtocartboxing', function(req, res) {
     console.log(cart)
 
 })
+app.post('/search', async function(reg, res) {
+
+})
 
 
-//mostafa
+
 app.post('/register', function(req, res) {
     var userdata = { username: req.body.username, password: req.body.password };
     console.log(userdata);
     main(userdata)
 });
+app.post('/logout', function(req, res) {
+    res.redirect('/');
+    mongodbcart();
+})
 
 app.post('/login', async function(req, res) {
     var userdata = { username: req.body.username, password: req.body.password };
@@ -121,13 +205,20 @@ app.post('/login', async function(req, res) {
     var uri = "mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority"; //our mognodb connection
     var client = new MongoClient(uri, { useNewUrlParser: true });
     await client.connect();
+    var flag = false;
     var output = await client.db('firstdb').collection("second collection").find().toArray();
     for (let value of output) {
         if (userdata.username === value.username && userdata.password === value.username) {
             console.log(userdata);
+            flag = true;
             res.redirect('home');
         }
+
     }
+    if (!flag) {
+        res.redirect('lol');
+    }
+
     client.close;
 
 })
@@ -152,6 +243,17 @@ async function main(userdata) {
     // await client.db('firstdb').Collection("second collection");
     //await client.db('firstdb').collection("second collection").insertOne(user);
     client.close;
+
+}
+async function mongodbcart() {
+
+
+    var { MongoClient } = require('mongodb');
+    var uri = "mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority"; //our mognodb connection
+    var client = new MongoClient(uri, { useNewUrlParser: true });
+    await client.connect();
+    await client.db('firstdb').collection("cart").insertOne(currentuser + cart);
+
 
 }
 module.exports = app;

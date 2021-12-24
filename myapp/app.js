@@ -78,6 +78,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //importing the reg page 
@@ -86,7 +87,7 @@ app.get('/registration', function(req, res) {
 });
 // importing root page 
 app.get('/', function(req, res) {
-    res.render('login')
+    res.render('signin')
 });
 
 // importing home page
@@ -194,6 +195,7 @@ app.post('/register', function(req, res) {
     main(userdata)
 });
 app.post('/logout', function(req, res) {
+    currentuser = null;
     res.redirect('/');
     mongodbcart();
 })

@@ -2,8 +2,9 @@ const { error } = require('console');
 var express = require('express');
 var path = require('path');
 var app = express();
-var alert = require('alert');
-const session=require('express-session');
+const popup = require('node-popup');
+
+
 var currentuser = null;
 const cart = [];
 const items = ['sun','leaves', 'boxing','tennis','galaxy', 'iphone' ];
@@ -108,7 +109,7 @@ app.get('/boxing', function(req, res) {
 //as i tring to code this function i countered a problem in the ejs file which in the form there is an action i donot know how to handle it 
 app.post('/addtocartiphone', function(req, res) {
     if (cart.includes('iphone')){
-    console.log('iphone')
+  alert('iphone')
     }else{
     cart.push('iphone');
     }
@@ -192,7 +193,7 @@ app.post('/register', function(req, res) {
     main(userdata)
 });
 app.post('/logout', function(req, res) {
-    currentuser = null;
+  
     res.redirect('/');
     mongodbcart();
 })
@@ -271,17 +272,13 @@ async function mongodbcart() {
     if(flag == false){
         await client.db('firstdb').collection("cart").insertOne(myquery);
     }else{
-        await client.db('firstdb').collection("cart").updateOne(output[index],myquery);
+        await client.db('firstdb').collection("cart").replaceOne(output[index],myquery);
         }
 
 }
 module.exports = app;
 if (process.env.PORT) {
-    app.listen(process.env.PORT,function(){console.log('server started')});
-    }
-    else 
-    {
-        app.listen(process.env.PORT,function(){
-            console.log('login faster')
-        })
-    }
+    app.listen(process.env.PORT,function () {log.console
+        
+    })
+}

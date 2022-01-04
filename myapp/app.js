@@ -2,75 +2,17 @@ const { error } = require('console');
 var express = require('express');
 var path = require('path');
 var app = express();
+var alert = require('alert');
+const session=require('express-session');
 var currentuser = null;
 const cart = [];
-
-function getnumberofsamsung(data) {
-    data.sort();
-    var counter = 0;
-    for (let i = 0; i <= data.length; i++) {
-        if (data[i] == 'samsung') {
-            counter++;
-        }
-    }
-    return counter;
-}
-
-function getnumberofiph(data) {
-    data.sort();
-    var counter = 0;
-    for (let i = 0; i <= data.length; i++) {
-        if (data[i] == 'iphone') {
-            counter++;
-        }
-    }
-    return counter;
-}
+const items = ['sun','leaves', 'boxing','tennis','galaxy', 'iphone' ];
+var results = [];
 
 
-function getnumberofsun(data) {
-    data.sort();
-    var counter = 0;
-    for (let i = 0; i <= data.length; i++) {
-        if (data[i] == 'sun') {
-            counter++;
-        }
-    }
-    return counter;
-}
 
-function getnumberoftennis(data) {
-    data.sort();
-    var counter = 0;
-    for (let i = 0; i <= data.length; i++) {
-        if (data[i] == 'tennis') {
-            counter++;
-        }
-    }
-    return counter;
-}
 
-function getnumberofboxing(data) {
-    data.sort();
-    var counter = 0;
-    for (let i = 0; i <= data.length; i++) {
-        if (data[i] == 'boxing') {
-            counter++;
-        }
-    }
-    return counter;
-}
 
-function getnumberofleaves(data) {
-    data.sort();
-    var counter = 0;
-    for (let i = 0; i <= data.length; i++) {
-        if (data[i] == 'leaves') {
-            counter++;
-        }
-    }
-    return counter;
-}
 // view engine setup
 
 app.set('views', path.join(__dirname, 'views'));
@@ -87,25 +29,27 @@ app.get('/registration', function(req, res) {
 });
 // importing root page 
 app.get('/', function(req, res) {
-    res.render('signin')
+    res.render('login')
 });
 
 // importing home page
 app.get('/home', function(req, res) {
     res.render('home');
-})
+});
 app.get('/lol', function(req, res) {
         res.render('lol');
-    })
+    });
     //importing Cart
+
 app.get('/cart', function(req, res) {
         res.render('cart', {
-            quantitysam: getnumberofsamsung(cart),
-            quantityiph: getnumberofiph(cart),
-            quantitytennis: getnumberoftennis(cart),
-            quantitysun: getnumberofsun(cart),
-            quantityleaves: getnumberofleaves(cart),
-            quantityboxing: getnumberofboxing(cart)
+            insert: cart[0],
+            insert1: cart[1],
+            insert2: cart[2],
+            insert3: cart[3],
+            insert4: cart[4],
+            insert5: cart[5],
+            insert6: cart[6],
         })
     }) // importing sports
 app.get('/sports', function(req, res) {
@@ -134,7 +78,15 @@ app.get('/leaves', function(req, res) {
     })
     //importing searchresults
 app.get('/searchresults', function(req, res) {
-        res.render('searchresults')
+        res.render('searchresults', { 
+            bombaser: results[0],
+            bombaser1: results[1],
+            bombaser2: results[2],
+            bombaser3: results[3],
+            bombaser4: results[4],
+            bombaser5: results[5],
+            bombaser6: results[6],
+        })
     })
     //importing tennis
 app.get('/tennis', function(req, res) {
@@ -155,35 +107,80 @@ app.get('/boxing', function(req, res) {
 // requiring register page usernames and password
 //as i tring to code this function i countered a problem in the ejs file which in the form there is an action i donot know how to handle it 
 app.post('/addtocartiphone', function(req, res) {
+    if (cart.includes('iphone')){
+    console.log('iphone')
+    }else{
     cart.push('iphone');
-    console.log(cart)
+    }
+    console.log(cart);
 })
 app.post('/addtocartsamsung', function(req, res) {
-    cart.push('samsung');
+    cart.push('galaxy');
     console.log(cart)
 
 })
+
+
+
 app.post('/addtocartsun', function(req, res) {
-    cart.push('sun');
+    if (cart.includes('sun')){
+        console.log('')
+        }else{
+        cart.push('sun');
+        }
+ 
     console.log(cart)
 
 })
 app.post('/addtocarttennis', function(req, res) {
-    cart.push('tennis');
+    if (cart.includes('tennis')){
+        console.log('')
+        }else{
+        cart.push('tennis');
+        }
+    
     console.log(cart)
 
 })
 app.post('/addtocartleaves', function(req, res) {
-    cart.push('leaves');
+    if (cart.includes('leaves')){
+        console.log('')
+        }else{
+        cart.push('leaves');
+        }
     console.log(cart)
 
 })
 app.post('/addtocartboxing', function(req, res) {
-    cart.push('boxing');
+    if (cart.includes('boxing')){
+        console.log('')
+        }else{
+        cart.push('boxing');
+        }
     console.log(cart)
 
 })
-app.post('/search', async function(reg, res) {
+app.post('/search', async function(req, res) {
+    var searched = req.body.Search ;
+     results = ["No Results Found"]
+     var t = false;
+     for (let index1 = 0; index1 < items.length ; index1++) {
+        if(items[index1].includes(searched)){
+        t = true;
+        break;
+        }
+    }
+    if(t){
+    results.pop();
+    }
+    for (let index = 0; index < items.length ; index++) {
+        if(items[index].includes(searched)){
+        results.push(items[index])
+
+        }
+    }
+    console.log(results)
+    res.redirect('/searchresults');
 
 })
 
@@ -213,12 +210,13 @@ app.post('/login', async function(req, res) {
         if (userdata.username === value.username && userdata.password === value.username) {
             console.log(userdata);
             flag = true;
+            currentuser=userdata.username;
             res.redirect('home');
         }
 
     }
     if (!flag) {
-        res.redirect('lol');
+        
     }
 
     client.close;
@@ -247,15 +245,34 @@ async function main(userdata) {
     client.close;
 
 }
+// if(myquery.currentuser != output[index].currentuser)
+// {
+//    
+
+// } await client.db('firstdb').collection("cart").updateOne(index[i],myquery);
 async function mongodbcart() {
-
-
     var { MongoClient } = require('mongodb');
     var uri = "mongodb+srv://admin:admin@cluster0.xbuxo.mongodb.net/firstdb?retryWrites=true&w=majority"; //our mognodb connection
     var client = new MongoClient(uri, { useNewUrlParser: true });
     await client.connect();
-    await client.db('firstdb').collection("cart").insertOne(currentuser + cart);
-
+    var output = await client.db('firstdb').collection("cart").find().toArray();
+    var myquery = { currentuser,cart };
+    var flag = false;
+    var index ;
+    for (index = 0; index < output.length; index++) {
+         if(output[index] != myquery){
+           if(myquery.currentuser == output[index].currentuser)
+             {
+               flag = true;
+               break;
+             }
+         }    
+    }
+    if(flag == false){
+        await client.db('firstdb').collection("cart").insertOne(myquery);
+    }else{
+        await client.db('firstdb').collection("cart").updateOne(output[index],myquery);
+        }
 
 }
 module.exports = app;

@@ -2,7 +2,6 @@ const { error } = require('console');
 var express = require('express');
 var path = require('path');
 var app = express();
-var alert = require('alert');
 const session=require('express-session');
 var currentuser = null;
 const cart = [];

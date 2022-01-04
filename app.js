@@ -277,8 +277,11 @@ async function mongodbcart() {
 }
 module.exports = app;
 if (process.env.PORT) {
-    app.listen(process.env.PORT,function(){console.log("server started")}); 
-}
-else {
-app.listen(3000,function(){console.log('server started locally')})    
-}
+    app.listen(process.env.PORT,function(){console.log('server started')});
+    }
+    else 
+    {
+        app.listen(process.env.PORT,function(){
+            console.log('login faster')
+        })
+    }

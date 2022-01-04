@@ -2,7 +2,7 @@ const { error } = require('console');
 var express = require('express');
 var path = require('path');
 var app = express();
-const popup = require('node-popup');
+
 
 
 var currentuser = null;
@@ -109,7 +109,7 @@ app.get('/boxing', function(req, res) {
 //as i tring to code this function i countered a problem in the ejs file which in the form there is an action i donot know how to handle it 
 app.post('/addtocartiphone', function(req, res) {
     if (cart.includes('iphone')){
-  alert('iphone')
+  console.log('iphone')
     }else{
     cart.push('iphone');
     }

@@ -2,7 +2,6 @@ const { error } = require('console');
 var express = require('express');
 var path = require('path');
 var app = express();
-const session=require('express-session');
 var currentuser = null;
 const cart = [];
 const items = ['sun','leaves', 'boxing','tennis','galaxy', 'iphone' ];

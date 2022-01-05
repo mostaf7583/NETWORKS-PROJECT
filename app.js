@@ -3,8 +3,6 @@ var express = require('express');
 var path = require('path');
 var app = express();
 
-
-
 var currentuser = null;
 const cart = [];
 const items = ['sun','leaves', 'boxing','tennis','galaxy', 'iphone' ];
@@ -278,7 +276,17 @@ async function mongodbcart() {
 }
 module.exports = app;
 if (process.env.PORT) {
+
     app.listen(process.env.PORT,function () {log.console
         
     })
 }
+=======
+    app.listen(process.env.PORT,function(){console.log('server started')});
+    }
+    else 
+    {
+        app.listen(process.env.PORT,function(){
+            console.log('login faster')
+        })
+    }

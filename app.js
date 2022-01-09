@@ -204,7 +204,7 @@ app.post('/login', async function(req, res) {
     await client.connect();
     var flag = false;
     var output = await client.db('firstdb').collection("second collection").find().toArray();
-    if(userdata.username === '' && userdata.password == ''){res.redirect('/lol');}
+    if(userdata.username === '' || userdata.password == ''){res.redirect('/lol');}
     else {
     for (let value of output) {
         if (userdata.username === value.username && userdata.password === value.username) {
